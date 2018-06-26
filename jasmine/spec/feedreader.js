@@ -26,33 +26,31 @@ $(function() {
             expect(allFeeds.length).not.toBe(0);
         });
 
-
         /* TODO: Write a test that loops through each feed
          * in the allFeeds object and ensures it has a URL defined
          * and that the URL is not empty.
          */
         it('urls are defined and not empty', function() {
-            for (let i = 0; i < allFeeds.length; i++) {
+            //
+            allFeeds.forEach(function(item) {
                 //passes this check if url is defined
-                expect(allFeeds[i].url).toBeDefined();
+                expect(item.url).toBeDefined();
                 //passes this check if url is not empty
-                expect(allFeeds[i].url).not.toBe({});
-            }
+                expect(item.url).not.toBe({});
+            });
         });
-
 
         /* TODO: Write a test that loops through each feed
          * in the allFeeds object and ensures it has a name defined
          * and that the name is not empty.
          */
         it('names are defined and not empty', function() {
-            for (var i = allFeeds.length - 1; i >= 0; i--) {
+            allFeeds.forEach(function(item) {
                 //passes this check if name is defined
-                expect(allFeeds[i].name).toBeDefined();
+                expect(item.name).toBeDefined();
                 //passes this check if name is not empty
-                expect(allFeeds[i].name.length).not.toEqual(0);
-
-            }
+                expect(item.name.length).not.toEqual(0);
+            });
         });
     });
 
@@ -74,7 +72,6 @@ $(function() {
         it('hidden by default', function() {
             expect(menu.className).toEqual('menu-hidden');
         });
-
 
         /* TODO: Write a test that ensures the menu changes
          * visibility when the menu icon is clicked. This test
@@ -107,45 +104,20 @@ $(function() {
          */
 
         //these varibales are used to verify that there is at least one entry in the feed.
-        let feedContainer,
-            parentOfEntryElement,
-            entryElement;
+        let numberOfEntryElementsInFeedContainer;
 
         beforeEach(function(done) {
             loadFeed(0, function() {
-                //feed container
-                feedContainer = $('.feed');
-
-                //parent element to the entry element and child of feed container
-                parentOfEntryElement = $('.entry-link');
-
-                //entry element
-                entryElement = $('.entry');
-
-                //
+                numberOfEntryElementsInFeedContainer = $('.feed .entry').length;
                 done();
             });
         });
 
         //when async is 'done', 'it' will test it
         it('there is at least a single .entry element within the .feed container.', function(done) {
-
             // at least a single, .entry element within the feed container
-
-            //confirms that parentOfEntryElement is a child of feedContainer (check 1)
-            expect(parentOfEntryElement.parentElement).toEqual(feedContainer.children[0]);
-
-            //confirms that entryElement is a child of parentOfEntryElement (check 2)
-            expect(entryElement.parentElement).toEqual(parentOfEntryElement.children[0]);
-
-            //if check 1 and 2 pass then there is
-            //at least a single, .entry element within the feed container
-
-            //feedContainer
-            //parentOfEntryElement
-            //entryElement
-
-            //
+            //lenght of entry class elements inside feed container is greater than zero
+            expect(numberOfEntryElementsInFeedContainer).toBeGreaterThan(0);
             done();
         });
     });
@@ -165,19 +137,6 @@ $(function() {
             loadFeed(0, function() {
                 //store the first feed's content into a variable for later comparision
                 firstFeed = $('.feed').html();
-
-                //store text content of the entries headers from this feed into variables
-                //for later comparision
-                feedOneEntryElementOnesHeader = $('.entry')[0].children[0].textContent;
-                feedOneEntryElementTwosHeader = $('.entry')[1].children[0].textContent;
-                feedOneEntryElementThreesHeader = $('.entry')[2].children[0].textContent;
-                feedOneEntryElementFoursHeader = $('.entry')[3].children[0].textContent;
-                feedOneEntryElementFivesHeader = $('.entry')[4].children[0].textContent;
-                feedOneEntryElementSixsHeader = $('.entry')[5].children[0].textContent;
-                feedOneEntryElementSevensHeader = $('.entry')[6].children[0].textContent;
-                feedOneEntryElementEightsHeader = $('.entry')[7].children[0].textContent;
-                feedOneEntryElementNinesHeader = $('.entry')[8].children[0].textContent;
-                feedOneEntryElementTensHeader = $('.entry')[9].children[0].textContent;
                 done();
             });
         });
@@ -186,43 +145,12 @@ $(function() {
             loadFeed(1, function() {
                 //store this newly load feed's content into a variable for later comparision
                 secondFeed = $('.feed').html();
-
-                //store text content of entries headers from this feed into variables
-                //for later comparision
-                feedTwoEntryElementOnesHeader = $('.entry')[0].children[0].textContent;
-                feedTwoEntryElementTwosHeader = $('.entry')[1].children[0].textContent;
-                feedTwoEntryElementThreesHeader = $('.entry')[2].children[0].textContent;
-                feedTwoEntryElementFoursHeader = $('.entry')[3].children[0].textContent;
-                feedTwoEntryElementFivesHeader = $('.entry')[4].children[0].textContent;
-                feedTwoEntryElementSixsHeader = $('.entry')[5].children[0].textContent;
-                feedTwoEntryElementSevensHeader = $('.entry')[6].children[0].textContent;
-                feedTwoEntryElementEightsHeader = $('.entry')[7].children[0].textContent;
-                feedTwoEntryElementNinesHeader = $('.entry')[8].children[0].textContent;
-                feedTwoEntryElementTensHeader = $('.entry')[9].children[0].textContent;
-                //
-
                 //compare the whole first loaded feed's content to the second loaded feed's
                 //content
                 //if they are the same then a new feed was most likely not loaded
                 expect(firstFeed).not.toEqual(secondFeed);
-
-                //compare the entry headers text content from the fisrt feed's to the second feed's
-                //if they are the same then a new feed was not loaded
-                expect(feedTwoEntryElementOnesHeader).not.toEqual(feedOneEntryElementOnesHeader);
-                expect(feedTwoEntryElementTwosHeader).not.toEqual(feedOneEntryElementTwosHeader);
-                expect(feedTwoEntryElementThreesHeader).not.toEqual(feedOneEntryElementThreesHeader);
-                expect(feedTwoEntryElementFoursHeader).not.toEqual(feedOneEntryElementFoursHeader);
-                expect(feedTwoEntryElementFivesHeader).not.toEqual(feedOneEntryElementFivesHeader);
-                expect(feedTwoEntryElementSixsHeader).not.toEqual(feedOneEntryElementSixsHeader);
-                expect(feedTwoEntryElementSevensHeader).not.toEqual(feedOneEntryElementSevensHeader);
-                expect(feedTwoEntryElementEightsHeader).not.toEqual(feedOneEntryElementEightsHeader);
-                expect(feedTwoEntryElementNinesHeader).not.toEqual(feedOneEntryElementNinesHeader);
-                expect(feedTwoEntryElementTensHeader).not.toEqual(feedOneEntryElementTensHeader);
-
                 done();
             });
         });
-
     });
-
 }());
