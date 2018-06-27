@@ -70,7 +70,7 @@ $(function() {
 
         //passes if the 'menu' is hidden by default
         it('hidden by default', function() {
-            expect(menu.className).toEqual('menu-hidden');
+            expect($(menu).hasClass('menu-hidden')).toEqual(true);
         });
 
         /* TODO: Write a test that ensures the menu changes
@@ -83,13 +83,13 @@ $(function() {
             menuIcon.click();
 
             //menu shold not be hidden
-            expect(menu.className).not.toEqual('menu-hidden');
+            expect($(menu).hasClass('menu-hidden')).toEqual(false);
 
             //click the menu icon again to hide it
             menuIcon.click();
 
             //menu should be hidden
-            expect(menu.className).toEqual('menu-hidden');
+            expect($(menu).hasClass('menu-hidden')).toEqual(true);
         });
 
     });
